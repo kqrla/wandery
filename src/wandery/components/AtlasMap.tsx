@@ -9,7 +9,6 @@ const TILE_BASE = "https://{s}.basemaps.cartocdn.com/rastertiles/voyager_nolabel
 
 const REFERENCE_MAP_COLORS = {
   ocean: [190, 218, 199],
-  land: [248, 231, 236],
   road: [242, 174, 203],
   park: [239, 206, 174],
 } as const;
@@ -21,31 +20,10 @@ function blendChannel(source: number, target: number, strength: number) {
 }
 
 function recolorPixel(red: number, green: number, blue: number): readonly [number, number, number] {
-  const lightness = (Math.max(red, green, blue) + Math.min(red, green, blue)) / 2;
-  const blueLead = blue - Math.max(red, green);
-  const greenLead = green - Math.max(red, blue);
-  const redLead = red - Math.max(green, blue);
-  const isOcean = blueLead > 4 || (greenLead > 8 && blue > red + 2);
-  const isRoad = redLead > 7 && green < 215;
-  const isParkOrTerrain = greenLead > 4 || (red > green + 8 && green > blue + 8 && lightness < 230);
-  const target = isOcean
-    ? REFERENCE_MAP_COLORS.ocean
-    : isRoad
-      ? REFERENCE_MAP_COLORS.road
-      : isParkOrTerrain
-        ? REFERENCE_MAP_COLORS.park
-        : REFERENCE_MAP_COLORS.land;
-  const strength = isOcean ? 0.96 : isRoad ? 0.72 : isParkOrTerrain ? 0.5 : 0.64;
-  const oceanWashedTarget = [
-    blendChannel(target[0], REFERENCE_MAP_COLORS.ocean[0], 0.42),
-    blendChannel(target[1], REFERENCE_MAP_COLORS.ocean[1], 0.42),
-    blendChannel(target[2], REFERENCE_MAP_COLORS.ocean[2], 0.42),
-  ] as const;
-
   return [
-    blendChannel(red, oceanWashedTarget[0], strength),
-    blendChannel(green, oceanWashedTarget[1], strength),
-    blendChannel(blue, oceanWashedTarget[2], strength),
+    blendChannel(red, REFERENCE_MAP_COLORS.ocean[0], 0.92),
+    blendChannel(green, REFERENCE_MAP_COLORS.ocean[1], 0.92),
+    blendChannel(blue, REFERENCE_MAP_COLORS.ocean[2], 0.92),
   ];
 }
 
