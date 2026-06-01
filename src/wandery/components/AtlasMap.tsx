@@ -14,6 +14,8 @@ const REFERENCE_MAP_COLORS = {
   park: [239, 206, 174],
 } as const;
 
+const REFERENCE_LAND_FILL = "#f8e7ec";
+
 function blendChannel(source: number, target: number, strength: number) {
   return Math.round(source * (1 - strength) + target * strength);
 }
@@ -284,18 +286,18 @@ export default function AtlasMap({ center, zoom, activeFilters, toggles, year, l
           color: "rgba(80,60,70,1)",
           weight: 0.6,
           opacity: borderOpacity,
-          fillColor: "#ffffff",
-          fillOpacity: 0,
+          fillColor: REFERENCE_LAND_FILL,
+          fillOpacity: 0.72,
         };
       },
       onEachFeature: (feat: any, layer: any) => {
         const iso = feat.id || feat.properties?.iso_a3 || "";
         const name = labelOverrides?.[iso] ?? feat.properties?.name ?? "";
         layer.on({
-          mouseover: () => layer.setStyle({ weight: 1.2, opacity: 0.55, fillColor: "#f4ead8", fillOpacity: 0.18 }),
+          mouseover: () => layer.setStyle({ weight: 1.2, opacity: 0.55, fillColor: "#f2aecb", fillOpacity: 0.36 }),
           mouseout: () => layer.setStyle({
             weight: 0.6, opacity: borderOpacity,
-            fillColor: "#ffffff", fillOpacity: 0,
+            fillColor: REFERENCE_LAND_FILL, fillOpacity: 0.72,
           }),
           click: () => handlersRef.current.onCountry(iso, name),
           contextmenu: (e: any) => {
