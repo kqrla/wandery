@@ -181,12 +181,12 @@ html.theme-sage {
  * dust the whole pane in a faint cream so it reads as a museum atlas, not a satellite tool.
  */
 /*
- * voyager base: water ~hue 210 (blue), land ~hue 35 (warm beige).
- * a single hue-rotate(290deg) shifts blue → mint green AND beige → rose pink at once.
- * no sepia (sepia collapses everything to one hue and kills the water/land split).
+ * fabnet rose theme tinting — same filter the fabnet map uses.
+ * voyager tiles: water hue rotates blue → mint green, land beige → rose pink.
+ * no sepia, no overlay (overlay was washing everything beige).
  */
 .wd-map .leaflet-tile-pane {
-  filter: hue-rotate(290deg) saturate(2.4) brightness(1.04) contrast(0.95);
+  filter: hue-rotate(298deg) saturate(1.0) brightness(1.02) contrast(0.88);
 }
 
 
