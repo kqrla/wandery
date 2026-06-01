@@ -35,12 +35,17 @@ function recolorPixel(red: number, green: number, blue: number): readonly [numbe
       : isParkOrTerrain
         ? REFERENCE_MAP_COLORS.park
         : REFERENCE_MAP_COLORS.land;
-  const strength = isOcean ? 0.9 : isRoad ? 0.72 : isParkOrTerrain ? 0.5 : 0.64;
+  const strength = isOcean ? 0.96 : isRoad ? 0.72 : isParkOrTerrain ? 0.5 : 0.64;
+  const oceanWashedTarget = [
+    blendChannel(target[0], REFERENCE_MAP_COLORS.ocean[0], 0.42),
+    blendChannel(target[1], REFERENCE_MAP_COLORS.ocean[1], 0.42),
+    blendChannel(target[2], REFERENCE_MAP_COLORS.ocean[2], 0.42),
+  ] as const;
 
   return [
-    blendChannel(red, target[0], strength),
-    blendChannel(green, target[1], strength),
-    blendChannel(blue, target[2], strength),
+    blendChannel(red, oceanWashedTarget[0], strength),
+    blendChannel(green, oceanWashedTarget[1], strength),
+    blendChannel(blue, oceanWashedTarget[2], strength),
   ];
 }
 
@@ -287,7 +292,7 @@ export default function AtlasMap({ center, zoom, activeFilters, toggles, year, l
           weight: 0.6,
           opacity: borderOpacity,
           fillColor: REFERENCE_LAND_FILL,
-          fillOpacity: 0.72,
+          fillOpacity: 0.9,
         };
       },
       onEachFeature: (feat: any, layer: any) => {
@@ -297,7 +302,7 @@ export default function AtlasMap({ center, zoom, activeFilters, toggles, year, l
           mouseover: () => layer.setStyle({ weight: 1.2, opacity: 0.55, fillColor: "#f2aecb", fillOpacity: 0.36 }),
           mouseout: () => layer.setStyle({
             weight: 0.6, opacity: borderOpacity,
-            fillColor: REFERENCE_LAND_FILL, fillOpacity: 0.72,
+            fillColor: REFERENCE_LAND_FILL, fillOpacity: 0.9,
           }),
           click: () => handlersRef.current.onCountry(iso, name),
           contextmenu: (e: any) => {
