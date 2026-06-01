@@ -181,19 +181,10 @@ html.theme-sage {
  * dust the whole pane in a faint cream so it reads as a museum atlas, not a satellite tool.
  */
 .wd-map .leaflet-tile-pane {
-  /* match fabnet screenshot: pink-rose land, soft mint surrounds, high pop */
-  filter: sepia(0.55) hue-rotate(295deg) saturate(2.2) brightness(1.08) contrast(0.94);
+  /* fabnet default cherry & thistle rose tint */
+  filter: hue-rotate(298deg) saturate(1.6) brightness(0.98) contrast(0.90);
 }
-.wd-map::after {
-  content: "";
-  position: absolute; inset: 0;
-  pointer-events: none;
-  background:
-    radial-gradient(120% 90% at 50% 50%, rgba(255,225,232,0) 60%, rgba(220,130,160,0.14) 100%),
-    linear-gradient(rgba(255,200,215,0.05), rgba(255,200,215,0.05));
-  mix-blend-mode: multiply;
-  z-index: 400;
-}
+
 
 /* legacy fabnet selector left for safety on any leftover surfaces */
 .leaflet-tile-pane:not(.wd-map .leaflet-tile-pane) {
