@@ -176,7 +176,13 @@ html.theme-sage {
 }
 
 .wd-map .leaflet-tile-pane {
-  background: #bedac7;
+  background: hsl(132 33% 80%);
+  filter: none !important;
+}
+
+html.theme-pink .wd-map .leaflet-tile-pane,
+html.theme-sage .wd-map .leaflet-tile-pane {
+  background: hsl(132 33% 80%);
   filter: none !important;
 }
 
