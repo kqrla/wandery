@@ -181,9 +181,10 @@ html.theme-sage {
  * dust the whole pane in a faint cream so it reads as a museum atlas, not a satellite tool.
  */
 .wd-map .leaflet-tile-pane {
-  /* fabnet rose: pink-rose land + soft mint surrounds */
-  filter: sepia(0.55) hue-rotate(295deg) saturate(2.2) brightness(1.08) contrast(0.94);
+  /* fabnet rose: deep pink land + mint water (cranked for low-zoom voyager tiles) */
+  filter: sepia(0.9) hue-rotate(290deg) saturate(4) brightness(1.05) contrast(1.15);
 }
+
 .wd-map::after {
   content: "";
   position: absolute; inset: 0;
