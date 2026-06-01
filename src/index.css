@@ -1,0 +1,388 @@
+
+@import url("https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@300;400;500&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /*
+     * DEFAULT THEME — "Cherry & Thistle"
+     * Palette: cherry-blossom #edafb8 · cotton-rose #f2c8c8 · powder-petal #f7e1d7
+     *          dust-grey #dedbd2 · thistle #dec8e8 · thistle-2 #e1cdea
+     */
+    --background: 0 38% 96%;
+    --foreground: 280 22% 22%;
+    --muted: 46 10% 91%;
+    --muted-foreground: 340 8% 48%;
+    --popover: 18 50% 97%;
+    --popover-foreground: 280 22% 22%;
+    --border: 340 12% 82%;
+    --input: 340 12% 82%;
+    --card: 18 50% 97%;
+    --card-foreground: 280 22% 22%;
+    --primary: 351 38% 54%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 46 10% 91%;
+    --secondary-foreground: 280 22% 22%;
+    --accent: 283 35% 84%;
+    --accent-foreground: 280 22% 22%;
+    --destructive: 0 60% 48%;
+    --destructive-foreground: 0 0% 100%;
+    --ring: 351 38% 65%;
+
+    --radius: 0.5rem;
+
+    --chart-1: 351 52% 74%;
+    --chart-2: 283 36% 78%;
+    --chart-3: 351 40% 86%;
+    --chart-4: 0 45% 82%;
+    --chart-5: 283 28% 86%;
+
+    --sidebar-background: 0 38% 96%;
+    --sidebar-foreground: 280 22% 22%;
+    --sidebar-primary: 351 38% 54%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 46 10% 91%;
+    --sidebar-accent-foreground: 280 22% 22%;
+    --sidebar-border: 340 12% 82%;
+    --sidebar-ring: 351 38% 65%;
+
+    --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif;
+    --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+    --font-serif: 'Instrument Serif', ui-serif, Georgia, serif;
+
+    --shadow-x: 0px;
+    --shadow-y: 1px;
+    --shadow-blur: 4px;
+    --shadow-spread: 0px;
+    --shadow-opacity: 0.14;
+    --shadow-color: #000000;
+    --shadow-2xs: var(--shadow-x) var(--shadow-y) color-mix(in srgb, var(--shadow-color) calc(var(--shadow-opacity) * 100%), transparent);
+    --shadow-xs: var(--shadow-x) var(--shadow-y) var(--shadow-blur) var(--shadow-spread) color-mix(in srgb, var(--shadow-color) calc(var(--shadow-opacity) * 100%), transparent);
+    --shadow-sm: var(--shadow-x) var(--shadow-y) calc(var(--shadow-blur) * 1.5) var(--shadow-spread) color-mix(in srgb, var(--shadow-color) calc(var(--shadow-opacity) * 100%), transparent);
+    --shadow-md: calc(var(--shadow-x) * 2) calc(var(--shadow-y) * 2) calc(var(--shadow-blur) * 3) calc(var(--shadow-spread) - 1px) color-mix(in srgb, var(--shadow-color) calc(var(--shadow-opacity) * 100%), transparent);
+    --shadow-lg: calc(var(--shadow-x) * 4) calc(var(--shadow-y) * 4) calc(var(--shadow-blur) * 5) calc(var(--shadow-spread) - 3px) color-mix(in srgb, var(--shadow-color) calc(var(--shadow-opacity) * 100%), transparent);
+    --shadow-xl: calc(var(--shadow-x) * 6) calc(var(--shadow-y) * 6) calc(var(--shadow-blur) * 7) calc(var(--shadow-spread) - 5px) color-mix(in srgb, var(--shadow-color) calc(var(--shadow-opacity) * 100%), transparent);
+    --shadow-2xl: calc(var(--shadow-x) * 8) calc(var(--shadow-y) * 8) calc(max(0px, var(--shadow-blur) * 9 - 8px)) calc(var(--shadow-spread) - 12px) color-mix(in srgb, var(--shadow-color) calc(var(--shadow-opacity) * 250%), transparent);
+    --shadow: var(--shadow-md);
+
+    --lib-color: 283 28% 68%;
+    --make-color: 351 40% 60%;
+    --uni-color: 20 55% 65%;
+  }
+}
+
+/*
+ * PINK THEME — "Peachy Seashell"
+ * Palette: powder-blush #fec5bb · almond-silk #fcd5ce · soft-blush #fae1dd
+ *          seashell #f8edeb · linen #ece4db · peach-glow #fec89a
+ */
+html.theme-pink {
+  --background: 8 50% 96%;
+  --foreground: 18 32% 16%;
+  --muted: 7 55% 93%;
+  --muted-foreground: 18 16% 48%;
+  --popover: 10 30% 98%;
+  --popover-foreground: 18 32% 16%;
+  --border: 9 40% 87%;
+  --input: 9 40% 87%;
+  --card: 10 30% 98%;
+  --card-foreground: 18 32% 16%;
+  --primary: 22 38% 38%;
+  --primary-foreground: 0 0% 100%;
+  --secondary: 7 55% 93%;
+  --secondary-foreground: 18 32% 16%;
+  --accent: 30 92% 78%;
+  --accent-foreground: 18 32% 16%;
+  --destructive: 0 65% 50%;
+  --destructive-foreground: 0 0% 100%;
+  --ring: 22 38% 55%;
+  --chart-1: 9 88% 84%;
+  --chart-2: 30 90% 76%;
+  --chart-3: 9 60% 70%;
+  --chart-4: 336 55% 70%;
+  --chart-5: 25 85% 68%;
+  --sidebar-background: 8 50% 96%;
+  --sidebar-foreground: 18 32% 16%;
+  --sidebar-primary: 22 38% 38%;
+  --sidebar-primary-foreground: 0 0% 100%;
+  --sidebar-accent: 7 55% 93%;
+  --sidebar-accent-foreground: 18 32% 16%;
+  --sidebar-border: 9 40% 87%;
+  --sidebar-ring: 22 38% 55%;
+  --lib-color: 210 35% 62%;
+  --make-color: 9 58% 62%;
+  --uni-color: 30 75% 60%;
+}
+
+/*
+ * SAGE THEME — "Warm Cream"
+ * Warm neutral palette: cream · dusty rose · chestnut · no teal/green
+ */
+html.theme-sage {
+  --background: 38 22% 96%;
+  --foreground: 20 25% 18%;
+  --muted: 35 18% 91%;
+  --muted-foreground: 20 12% 50%;
+  --popover: 40 20% 98%;
+  --popover-foreground: 20 25% 18%;
+  --border: 30 14% 85%;
+  --input: 30 14% 85%;
+  --card: 40 20% 98%;
+  --card-foreground: 20 25% 18%;
+  --primary: 20 30% 38%;
+  --primary-foreground: 0 0% 100%;
+  --secondary: 35 18% 91%;
+  --secondary-foreground: 20 25% 18%;
+  --accent: 350 45% 72%;
+  --accent-foreground: 20 25% 18%;
+  --destructive: 0 62% 50%;
+  --destructive-foreground: 0 0% 100%;
+  --ring: 20 30% 55%;
+  --chart-1: 350 42% 70%;
+  --chart-2: 20 50% 60%;
+  --chart-3: 30 60% 72%;
+  --chart-4: 5 35% 66%;
+  --chart-5: 350 28% 80%;
+  --sidebar-background: 38 22% 96%;
+  --sidebar-foreground: 20 25% 18%;
+  --sidebar-primary: 20 30% 38%;
+  --sidebar-primary-foreground: 0 0% 100%;
+  --sidebar-accent: 35 18% 91%;
+  --sidebar-accent-foreground: 20 25% 18%;
+  --sidebar-border: 30 14% 85%;
+  --sidebar-ring: 20 30% 55%;
+  --lib-color: 330 22% 62%;
+  --make-color: 10 40% 56%;
+  --uni-color: 30 50% 58%;
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply font-sans antialiased bg-background text-foreground;
+    overflow: hidden;
+  }
+}
+
+/* ── Sheet / Dialog overlay — soft blur instead of dark black ── */
+.bg-black\/80 {
+  background-color: hsl(var(--foreground) / 0.10) !important;
+  backdrop-filter: blur(6px) saturate(0.65) !important;
+}
+
+/* ── wandery map tile tinting ──
+ * Base: CartoDB Voyager nolabels (warm beige land ~35°, parks ~90°, water ~200°)
+ * Wandery push: rotate land toward dusty-rose, mute everything, soften contrast,
+ * dust the whole pane in a faint cream so it reads as a museum atlas, not a satellite tool.
+ */
+.wd-map .leaflet-tile-pane {
+  /* match fabnet screenshot: pink-rose land, soft mint surrounds, high pop */
+  filter: sepia(0.55) hue-rotate(295deg) saturate(2.2) brightness(1.08) contrast(0.94);
+}
+.wd-map::after {
+  content: "";
+  position: absolute; inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(120% 90% at 50% 50%, rgba(255,225,232,0) 60%, rgba(220,130,160,0.14) 100%),
+    linear-gradient(rgba(255,200,215,0.05), rgba(255,200,215,0.05));
+  mix-blend-mode: multiply;
+  z-index: 400;
+}
+
+/* legacy fabnet selector left for safety on any leftover surfaces */
+.leaflet-tile-pane:not(.wd-map .leaflet-tile-pane) {
+  filter: hue-rotate(298deg) saturate(1.0) brightness(1.02) contrast(0.88);
+}
+
+html.theme-pink .leaflet-tile-pane {
+  filter: sepia(0.55) hue-rotate(295deg) saturate(2.2) brightness(1.08) contrast(0.94) !important;
+}
+
+html.theme-sage .leaflet-tile-pane {
+  filter: saturate(0.65) brightness(1.06) sepia(0.10) contrast(0.90) !important;
+}
+
+/* ── right-click "add place" floating pin ── */
+.fab-add-pin {
+  position: fixed;
+  z-index: 1010;
+  cursor: pointer;
+  background: none;
+  border: none;
+  padding: 0;
+  animation: pinPopIn 0.18s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+  filter: drop-shadow(0 4px 10px rgba(0,0,0,0.25));
+  transition: transform 0.12s ease, filter 0.12s ease;
+}
+.fab-add-pin:hover {
+  transform: scale(1.12) translateY(-2px);
+  filter: drop-shadow(0 6px 14px rgba(0,0,0,0.32));
+}
+
+@keyframes pinPopIn {
+  from { transform: scale(0.4) translateY(10px); opacity: 0; }
+  to   { transform: scale(1)   translateY(0);    opacity: 1; }
+}
+
+/* ── leaflet hover tooltip ── */
+.fab-hover-tooltip {
+  background: hsl(var(--card)) !important;
+  border: 1px solid hsl(var(--border)) !important;
+  border-radius: 10px !important;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.12) !important;
+  padding: 8px 13px !important;
+  white-space: nowrap !important;
+  pointer-events: none !important;
+}
+.fab-hover-tooltip::before {
+  border-top-color: hsl(var(--card)) !important;
+}
+.leaflet-tooltip-top.fab-hover-tooltip {
+  margin-bottom: 6px;
+}
+.fab-tt-name {
+  font-size: 12px;
+  font-weight: 700;
+  color: hsl(var(--foreground)) !important;
+  line-height: 1.3;
+}
+.fab-tt-type {
+  font-size: 10px;
+  color: hsl(var(--muted-foreground)) !important;
+  margin-top: 2px;
+  font-weight: 500;
+}
+
+/* ── leaflet map fixes ── */
+.leaflet-container { width: 100%; height: 100%; z-index: 0; }
+.leaflet-control-zoom { display: none !important; }
+.leaflet-control-attribution {
+  font-size: 9px !important;
+  opacity: 0.38;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+/* ── wandery hover tooltip for country borders ── */
+.wd-hover-tooltip {
+  background: hsl(var(--card) / 0.85) !important;
+  border: 1px solid hsl(var(--border) / 0.7) !important;
+  border-radius: 999px !important;
+  box-shadow: 0 4px 18px rgba(80, 60, 80, 0.10) !important;
+  padding: 4px 10px !important;
+  backdrop-filter: blur(10px);
+  pointer-events: none !important;
+  font-family: var(--font-mono);
+  font-size: 10px !important;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: hsl(var(--foreground)) !important;
+}
+.wd-hover-tooltip::before { display: none !important; }
+.wd-tt-name { color: hsl(var(--foreground)); }
+.wd-tt-meta { display:block; font-style: italic; opacity: 0.65; margin-top: 2px; text-transform: none; letter-spacing: 0.05em; }
+
+/* wandery country labels (rendered from GeoJSON, always english) */
+.wd-country-label {
+  pointer-events: none;
+  background: transparent !important;
+  border: none !important;
+}
+.wd-country-label span {
+  display: inline-block;
+  transform: translate(-50%, -50%);
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: hsl(var(--foreground) / 0.62);
+  text-shadow: 0 0 4px hsl(var(--background)), 0 0 8px hsl(var(--background));
+  white-space: nowrap;
+}
+
+/* large continent labels (used on /world) */
+.wd-continent-label {
+  pointer-events: none;
+  background: transparent !important;
+  border: none !important;
+}
+.wd-continent-label span {
+  display: inline-block;
+  transform: translate(-50%, -50%);
+  font-family: var(--font-sans);
+  font-size: 20px;
+  font-weight: 500;
+  letter-spacing: 0.38em;
+  text-transform: uppercase;
+  color: hsl(var(--foreground) / 0.42);
+  text-shadow: 0 0 8px hsl(var(--background)), 0 0 16px hsl(var(--background));
+  white-space: nowrap;
+}
+
+/* historical polity labels (USSR, British Raj, ...) */
+.wd-polity-label { pointer-events:none; background:transparent !important; border:none !important; }
+.wd-polity-label span {
+  display:inline-block; transform: translate(-50%, -50%);
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 16px;
+  letter-spacing: 0.14em;
+  color: hsl(var(--foreground) / 0.78);
+  text-shadow: 0 0 6px hsl(var(--background)), 0 0 12px hsl(var(--background));
+  white-space: nowrap;
+}
+
+/* ── timeline range slider ── */
+.wd-range {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 2px;
+  background: hsl(var(--border));
+  border-radius: 999px;
+  outline: none;
+}
+.wd-range::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 14px; height: 14px;
+  border-radius: 999px;
+  background: hsl(var(--card));
+  border: 1px solid hsl(var(--border));
+  box-shadow: 0 1px 4px rgba(80, 60, 80, 0.18), 0 0 0 4px hsl(var(--accent) / 0.25);
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+.wd-range::-webkit-slider-thumb:hover { transform: scale(1.15); }
+.wd-range::-moz-range-thumb {
+  width: 14px; height: 14px;
+  border-radius: 999px;
+  background: hsl(var(--card));
+  border: 1px solid hsl(var(--border));
+  box-shadow: 0 1px 4px rgba(80, 60, 80, 0.18), 0 0 0 4px hsl(var(--accent) / 0.25);
+  cursor: pointer;
+}
+
+/* hide scrollbar on chip strip */
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+/* drifting chip animation for landing page */
+@keyframes wd-drift {
+  from { transform: translate3d(0,0,0); opacity: 0.7; }
+  to   { transform: translate3d(0,-14px,0); opacity: 1; }
+}
+
+/* timeline reel — each digit rolls in like a rotary dial laid on its side */
+@keyframes wd-reel-roll {
+  from { transform: translateY(-30%); opacity: 0; }
+  to   { transform: translateY(0);    opacity: 1; }
+}
+
+/* font-serif utility (Tailwind's serif is generic; we want Instrument Serif) */
+.font-serif { font-family: var(--font-serif); }
