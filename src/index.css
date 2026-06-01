@@ -175,25 +175,15 @@ html.theme-sage {
   backdrop-filter: blur(6px) saturate(0.65) !important;
 }
 
-/* ── wandery map tile tinting ──
- * Base: CartoDB Voyager nolabels (warm beige land ~35°, parks ~90°, water ~200°)
- * Wandery push: rotate land toward dusty-rose, mute everything, soften contrast,
- * dust the whole pane in a faint cream so it reads as a museum atlas, not a satellite tool.
- */
-/*
- * fabnet rose theme tinting — same filter the fabnet map uses.
- * voyager tiles: water hue rotates blue → mint green, land beige → rose pink.
- * no sepia, no overlay (overlay was washing everything beige).
- */
 .wd-map .leaflet-tile-pane {
-  filter: hue-rotate(298deg) saturate(1.0) brightness(1.02) contrast(0.88);
+  background: hsl(132 33% 80%);
+  filter: none !important;
 }
 
-
-
-/* legacy fabnet selector left for safety on any leftover surfaces */
-.leaflet-tile-pane:not(.wd-map .leaflet-tile-pane) {
-  filter: hue-rotate(298deg) saturate(1.0) brightness(1.02) contrast(0.88);
+html.theme-pink .wd-map .leaflet-tile-pane,
+html.theme-sage .wd-map .leaflet-tile-pane {
+  background: hsl(132 33% 80%);
+  filter: none !important;
 }
 
 html.theme-pink .leaflet-tile-pane {

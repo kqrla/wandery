@@ -7,6 +7,64 @@ import { legalBlend, type LegalSystem } from "@/wandery/data/legal";
 
 const TILE_BASE = "https://{s}.basemaps.cartocdn.com/rastertiles/voyager_nolabels/{z}/{x}/{y}{r}.png";
 
+const REFERENCE_MAP_COLORS = {
+  ocean: [190, 218, 199],
+  road: [242, 174, 203],
+  park: [239, 206, 174],
+} as const;
+
+const REFERENCE_LAND_FILL = "#f8e7ec";
+
+function blendChannel(source: number, target: number, strength: number) {
+  return Math.round(source * (1 - strength) + target * strength);
+}
+
+function recolorPixel(red: number, green: number, blue: number): readonly [number, number, number] {
+  return [
+    blendChannel(red, REFERENCE_MAP_COLORS.ocean[0], 0.92),
+    blendChannel(green, REFERENCE_MAP_COLORS.ocean[1], 0.92),
+    blendChannel(blue, REFERENCE_MAP_COLORS.ocean[2], 0.92),
+  ];
+}
+
+function createReferenceThemeTileLayer(L: any) {
+  return L.TileLayer.extend({
+    createTile(coords: any, done: (error?: Error | null, tile?: HTMLCanvasElement) => void) {
+      const tile = document.createElement("canvas");
+      const tileSize = this.getTileSize();
+      tile.width = tileSize.x;
+      tile.height = tileSize.y;
+
+      const sourceImage = new Image();
+      sourceImage.crossOrigin = "anonymous";
+      sourceImage.onload = () => {
+        const context = tile.getContext("2d", { willReadFrequently: true });
+        if (!context) {
+          done(null, tile);
+          return;
+        }
+
+        context.drawImage(sourceImage, 0, 0, tile.width, tile.height);
+        const tilePixels = context.getImageData(0, 0, tile.width, tile.height);
+        const pixels = tilePixels.data;
+
+        for (let pixelIndex = 0; pixelIndex < pixels.length; pixelIndex += 4) {
+          const [red, green, blue] = recolorPixel(pixels[pixelIndex], pixels[pixelIndex + 1], pixels[pixelIndex + 2]);
+          pixels[pixelIndex] = red;
+          pixels[pixelIndex + 1] = green;
+          pixels[pixelIndex + 2] = blue;
+        }
+
+        context.putImageData(tilePixels, 0, 0);
+        done(null, tile);
+      };
+      sourceImage.onerror = () => done(new Error("map tile failed to load"), tile);
+      sourceImage.src = this.getTileUrl(coords);
+      return tile;
+    },
+  });
+}
+
 /**
  * Approximate India-claimed boundary of Jammu & Kashmir (including Gilgit-
  * Baltistan and Aksai Chin). The base world.geo.json renders the de-facto
@@ -102,7 +160,11 @@ export default function AtlasMap({ center, zoom, activeFilters, toggles, year, l
         worldCopyJump: true, zoomSnap: 0.25,
         wheelPxPerZoomLevel: 140, inertia: true,
       });
-      L.tileLayer(TILE_BASE, { maxZoom: 10, attribution: "© OpenStreetMap © CARTO" }).addTo(map);
+      const ReferenceThemeTileLayer = createReferenceThemeTileLayer(L);
+      new ReferenceThemeTileLayer(TILE_BASE, {
+        maxZoom: 10,
+        attribution: "© OpenStreetMap © CARTO",
+      }).addTo(map);
       mapRef.current = map;
       const data = await loadCountries();
       countriesRef.current = data;
@@ -207,18 +269,18 @@ export default function AtlasMap({ center, zoom, activeFilters, toggles, year, l
           color: "rgba(80,60,70,1)",
           weight: 0.6,
           opacity: borderOpacity,
-          fillColor: "#ffffff",
-          fillOpacity: 0,
+          fillColor: REFERENCE_LAND_FILL,
+          fillOpacity: 0.9,
         };
       },
       onEachFeature: (feat: any, layer: any) => {
         const iso = feat.id || feat.properties?.iso_a3 || "";
         const name = labelOverrides?.[iso] ?? feat.properties?.name ?? "";
         layer.on({
-          mouseover: () => layer.setStyle({ weight: 1.2, opacity: 0.55, fillColor: "#f4ead8", fillOpacity: 0.18 }),
+          mouseover: () => layer.setStyle({ weight: 1.2, opacity: 0.55, fillColor: "#f2aecb", fillOpacity: 0.36 }),
           mouseout: () => layer.setStyle({
             weight: 0.6, opacity: borderOpacity,
-            fillColor: "#ffffff", fillOpacity: 0,
+            fillColor: REFERENCE_LAND_FILL, fillOpacity: 0.9,
           }),
           click: () => handlersRef.current.onCountry(iso, name),
           contextmenu: (e: any) => {
