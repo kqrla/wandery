@@ -7,6 +7,79 @@ import { legalBlend, type LegalSystem } from "@/wandery/data/legal";
 
 const TILE_BASE = "https://{s}.basemaps.cartocdn.com/rastertiles/voyager_nolabels/{z}/{x}/{y}{r}.png";
 
+const REFERENCE_MAP_COLORS = {
+  ocean: [190, 218, 199],
+  land: [248, 231, 236],
+  road: [242, 174, 203],
+  park: [239, 206, 174],
+} as const;
+
+function blendChannel(source: number, target: number, strength: number) {
+  return Math.round(source * (1 - strength) + target * strength);
+}
+
+function recolorPixel(red: number, green: number, blue: number): readonly [number, number, number] {
+  const lightness = (Math.max(red, green, blue) + Math.min(red, green, blue)) / 2;
+  const blueLead = blue - Math.max(red, green);
+  const greenLead = green - Math.max(red, blue);
+  const redLead = red - Math.max(green, blue);
+  const isOcean = blueLead > 4 || (greenLead > 8 && blue > red + 2);
+  const isRoad = redLead > 7 && green < 215;
+  const isParkOrTerrain = greenLead > 4 || (red > green + 8 && green > blue + 8 && lightness < 230);
+  const target = isOcean
+    ? REFERENCE_MAP_COLORS.ocean
+    : isRoad
+      ? REFERENCE_MAP_COLORS.road
+      : isParkOrTerrain
+        ? REFERENCE_MAP_COLORS.park
+        : REFERENCE_MAP_COLORS.land;
+  const strength = isOcean ? 0.9 : isRoad ? 0.72 : isParkOrTerrain ? 0.5 : 0.64;
+
+  return [
+    blendChannel(red, target[0], strength),
+    blendChannel(green, target[1], strength),
+    blendChannel(blue, target[2], strength),
+  ];
+}
+
+function createReferenceThemeTileLayer(L: any) {
+  return L.TileLayer.extend({
+    createTile(coords: any, done: (error?: Error | null, tile?: HTMLCanvasElement) => void) {
+      const tile = document.createElement("canvas");
+      const tileSize = this.getTileSize();
+      tile.width = tileSize.x;
+      tile.height = tileSize.y;
+
+      const sourceImage = new Image();
+      sourceImage.crossOrigin = "anonymous";
+      sourceImage.onload = () => {
+        const context = tile.getContext("2d", { willReadFrequently: true });
+        if (!context) {
+          done(null, tile);
+          return;
+        }
+
+        context.drawImage(sourceImage, 0, 0, tile.width, tile.height);
+        const tilePixels = context.getImageData(0, 0, tile.width, tile.height);
+        const pixels = tilePixels.data;
+
+        for (let pixelIndex = 0; pixelIndex < pixels.length; pixelIndex += 4) {
+          const [red, green, blue] = recolorPixel(pixels[pixelIndex], pixels[pixelIndex + 1], pixels[pixelIndex + 2]);
+          pixels[pixelIndex] = red;
+          pixels[pixelIndex + 1] = green;
+          pixels[pixelIndex + 2] = blue;
+        }
+
+        context.putImageData(tilePixels, 0, 0);
+        done(null, tile);
+      };
+      sourceImage.onerror = () => done(new Error("map tile failed to load"), tile);
+      sourceImage.src = this.getTileUrl(coords);
+      return tile;
+    },
+  });
+}
+
 /**
  * Approximate India-claimed boundary of Jammu & Kashmir (including Gilgit-
  * Baltistan and Aksai Chin). The base world.geo.json renders the de-facto
@@ -102,7 +175,11 @@ export default function AtlasMap({ center, zoom, activeFilters, toggles, year, l
         worldCopyJump: true, zoomSnap: 0.25,
         wheelPxPerZoomLevel: 140, inertia: true,
       });
-      L.tileLayer(TILE_BASE, { maxZoom: 10, attribution: "© OpenStreetMap © CARTO" }).addTo(map);
+      const ReferenceThemeTileLayer = createReferenceThemeTileLayer(L);
+      new ReferenceThemeTileLayer(TILE_BASE, {
+        maxZoom: 10,
+        attribution: "© OpenStreetMap © CARTO",
+      }).addTo(map);
       mapRef.current = map;
       const data = await loadCountries();
       countriesRef.current = data;
