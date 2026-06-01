@@ -176,14 +176,8 @@ html.theme-sage {
 }
 
 .wd-map .leaflet-tile-pane {
-  filter: none;
-}
-
-
-
-/* legacy fabnet selector left for safety on any leftover surfaces */
-.leaflet-tile-pane:not(.wd-map .leaflet-tile-pane) {
-  filter: hue-rotate(298deg) saturate(1.0) brightness(1.02) contrast(0.88);
+  background: #bedac7;
+  filter: none !important;
 }
 
 html.theme-pink .leaflet-tile-pane {
